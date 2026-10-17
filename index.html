@@ -2,6 +2,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Friends</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5ff;color:#202b45}
+header{background:#3449b8;color:white;text-align:center;padding:25px 15px}
+header h1{margin:0 0 8px}
+main{max-width:520px;margin:24px auto;padding:22px;background:white;border-radius:16px;box-shadow:0 4px 18px #0001}
+h2{text-align:center}
+label{display:block;font-weight:bold;margin:15px 0 7px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ccd2e2;border-radius:8px;font-size:16px}
+textarea{min-height:100px;resize:vertical}
+button{width:100%;padding:13px;background:#3449b8;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;margin-top:18px}
+#preview{display:none;width:120px;height:120px;object-fit:cover;border-radius:50%;margin:15px auto}
+#message{padding:12px;background:#eef2ff;border-radius:8px;line-height:1.5}
+footer{text-align:center;padding:20px;color:#606a80;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>World Friends</h1>
+<p>Meet people. Share cultures. Build friendships.</p>
+</header>
+
+<main>
+<h2>Create Your Profile</h2>
+<p id="message">Fill in your details to prepare your profile.</p>
+
+<form id="profileForm">
+<label for="name">Your name</label>
+<input id="name" name="name" required maxlength="60"
+placeholder="Enter your name">
+
+<label for="photo">Profile photo</label>
+<input id="photo" type="file" accept="image/*">
+<img id="preview" alt="Selected profile photo preview">
+
+<label for="country">Country</label>
+<select id="country" name="country" required>
+<option value="">Choose your country</option>
+<option>India</option>
+<option>Madagascar</option>
+<option>France</option>
+<option>Canada</option>
+<option>Nepal</option>
+<option>Indonesia</option>
+<option>Other</option>
+</select>
+
+<label for="bio">About yourself</label>
+<textarea id="bio" name="bio" maxlength="500"
+required placeholder="Write a little about yourself"></textarea>
+
+<label>
+<input id="agree" type="checkbox" required
+style="width:auto">
+I agree to follow the community rules and respect others' privacy.
+</label>
+
+<button type="submit">Preview My Profile</button>
+</form>
+
+<section id="result" hidden>
+<h2>Your Profile Preview</h2>
+<img id="resultPhoto" alt="Profile photo"
+style="display:none;width:100px;height:100px;object-fit:cover;border-radius:50%">
+<p><strong>Name:</strong> <span id="resultName"></span></p>
+<p><strong>Country:</strong> <span id="resultCountry"></span></p>
+<p><strong>About:</strong> <span id="resultBio"></span></p>
+<p>This is a preview only. Your profile has not been uploaded or saved online.</p>
+</section>
+</main>
+
+<footer>
+Protect your personal information. Never share passwords or financial details.
+</footer>
+
+<script>
+const photo = document.getElementById("photo");
+const preview = document.getElementById("preview");
+let photoData = "";
+
+photo.addEventListener("change", function () {
+  const file = this.files[0];
+  photoData = "";
+  preview.style.display = "none";
+
+  if (!file) return;
+  if (!file.type.startsWith("image/")) {
+    alert("Please choose an image file.");
+    this.value = "";
+    return;
+  }
+  if (file.size > 3 * 1024 * 1024) {
+    alert("Choose a photo smaller than 3 MB.");
+    this.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    photoData = reader.result;
+    preview.src = photoData;
+    preview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById("profileForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  document.getElementById("resultName").textContent =
+    document.getElementById("name").value.trim();
+  document.getElementById("resultCountry").textContent =
+    document.getElementById("country").value;
+  document.getElementById("resultBio").textContent =
+    document.getElementById("bio").value.trim();
+
+  const resultPhoto = document.getElementById("resultPhoto");
+  if (photoData) {
+    resultPhoto.src = photoData;
+    resultPhoto.style.display = "block";
+  } else {
+    resultPhoto.style.display = "none";
+  }
+
+  document.getElementById("result").hidden = false;
+  document.getElementById("message").textContent =
+    "Your preview is ready. It is not saved online.";
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Friends</title>
