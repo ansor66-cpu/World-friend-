@@ -52,3 +52,93 @@
   </main>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Friends</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6ff;color:#202544}
+header{background:#4338ca;color:white;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:30px}
+header p{margin-bottom:0}
+main{max-width:650px;margin:25px auto;padding:16px}
+.card{background:white;padding:22px;border-radius:16px;margin-bottom:20px;box-shadow:0 4px 18px #20254412}
+h2{margin-top:0}
+input,select,textarea{width:100%;padding:13px;margin:7px 0 15px;border:1px solid #ccd0e0;border-radius:8px;font-size:16px}
+button{background:#4338ca;color:white;border:0;padding:13px 18px;border-radius:9px;font-size:16px;cursor:pointer}
+button:hover{background:#312e81}
+.note{color:#555d76;font-size:14px;line-height:1.5}
+footer{text-align:center;padding:20px;color:#555d76}
+</style>
+</head>
+<body>
+<header>
+<h1>World Friends</h1>
+<p>Meet people. Discover cultures. Build friendships.</p>
+</header>
+<main>
+<section class="card">
+<h2>Welcome to World Friends</h2>
+<p>Make friends around the world and discover new cultures.</p>
+<p class="note">For adults aged 18 and over. Respect, honesty and privacy matter.</p>
+</section>
+
+<section class="card">
+<h2>Create your account</h2>
+<form id="signup">
+<label for="name">Your name</label>
+<input id="name" required maxlength="60" placeholder="Enter your name">
+
+<label for="email">Email address</label>
+<input id="email" type="email" required placeholder="you@example.com">
+
+<label for="dob">Date of birth</label>
+<input id="dob" type="date" required>
+
+<label for="country">Country</label>
+<input id="country" required maxlength="60" placeholder="Your country">
+
+<label for="about">About you</label>
+<textarea id="about" maxlength="500" placeholder="Tell people about your interests"></textarea>
+
+<label>
+<input id="agree" type="checkbox" required style="width:auto">
+I agree to follow the community rules and privacy policy.
+</label>
+<p class="note">You must be at least 18 years old to register.</p>
+<button type="submit">Continue</button>
+<p id="result" role="status"></p>
+</form>
+</section>
+
+<section class="card">
+<h2>Our community</h2>
+<p>Discover people, share interests and make meaningful friendships.</p>
+<p class="note">Member profiles, secure login, private messaging and account deletion require the secure backend setup before they can work.</p>
+</section>
+</main>
+<footer>World Friends · Friendship without borders</footer>
+<script>
+document.getElementById("signup").addEventListener("submit",function(e){
+e.preventDefault();
+const dob=new Date(document.getElementById("dob").value);
+const today=new Date();
+let age=today.getFullYear()-dob.getFullYear();
+const beforeBirthday=today.getMonth()<dob.getMonth()||
+(today.getMonth()===dob.getMonth()&&today.getDate()<dob.getDate());
+if(beforeBirthday)age--;
+if(!document.getElementById("dob").value||dob>today||age<18){
+document.getElementById("result").textContent=
+"Registration is available only to people aged 18 or older.";
+return;
+}
+document.getElementById("result").textContent=
+"Your age meets the minimum requirement. Account creation will be available after secure login is connected.";
+});
+</script>
+</body>
+                      </html>
+  
